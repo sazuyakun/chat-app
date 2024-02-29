@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     }
-})
+}, {timestamps: true})
 // fullName, username, password, confirmPassword, gender
 
 const User = mongoose.model("User", userSchema);
