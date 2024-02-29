@@ -11,7 +11,8 @@ const PORT = process.env.PORT || 5000;
 // app.get('/', (req, res) => {
 //     res.send('Hello Urvi');
 // })
-app.use(express.json()); //parse incoming requests from req.body
+
+app.use(express.json());                               //parse incoming requests from req.body
 
 app.use("/api/auth", authRoutes)
 
