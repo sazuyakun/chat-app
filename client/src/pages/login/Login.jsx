@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import {useLogin}  from "../../hooks/useLogin";
 
 const Login = () => {
+
+  const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+
+	const { loading, login } = useLogin();
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		await login(username, password);
+	};
+
+
   return (
     <div className="flex flex-col items-center justify-center min-w-[75vw] md:min-w-[50vw] mx-auto">
       <div className="w-full p-6 rounded-lg shadow-md bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
@@ -9,7 +22,8 @@ const Login = () => {
           <div className="text-orange-300 p-1 text-4xl">ChatApp</div>
           Login
         </h1>
-        <form>
+
+        <form onSubmit={handleSubmit}>
           <div>
             <label className="label p-2 pt-9">
               <span className="text-white label-text">Username</span>
@@ -18,6 +32,8 @@ const Login = () => {
               type="text"
               placeholder="Enter username"
               className=" w-full input input-bordered h-10"
+              value = {username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div>
@@ -28,6 +44,8 @@ const Login = () => {
               type="password"
               placeholder="Enter password"
               className=" w-full input input-bordered h-10"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <Link
@@ -38,7 +56,15 @@ const Login = () => {
           </Link>
 
           <div>
-          <button className="btn btn-block btn-outline hover:bg-blue-700 hover:text-white mt-2 text-black">LOGIN</button>
+          <button className="btn btn-block btn-outline hover:bg-blue-700 hover:text-white mt-2 text-black"
+            disabled={loading}
+          >
+          {loading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            "LOGIN"
+          )}
+          </button>
           </div>
         </form>
       </div>
